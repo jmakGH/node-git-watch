@@ -1,4 +1,6 @@
+import { format } from 'date-fns';
 import * as yargs from 'yargs';
+import { addAll, commit, hasNewOrChangedFiles, push } from './git';
 import log from './log';
 
 /**
@@ -17,13 +19,35 @@ const { argv } = yargs.scriptName('node-git-watch').option('t', {
 log.info('Starting up node-git-watch');
 log.info(`Attempting commit every ${argv.t}ms`);
 
-let count = 1;
 let timer;
 
 function watch() {
-  return setTimeout(() => {
-    log.info(`Counter: ${count++}`);
-    timer = watch();
+  return setTimeout(async () => {
+    try {
+      const hasChanges = await hasNewOrChangedFiles();
+
+      if (hasChanges) {
+        await addAll().catch(e => {
+          throw e;
+        });
+
+        const timestamp = format(new Date, 'y-MM-dd HH:mm:ss');
+        await commit(`Commit (${timestamp})`).catch(e => {
+          throw e;
+        });
+
+        await push().catch(e => {
+          throw e;
+        });
+
+        log.info(`Commited and pushed ${timestamp}`);
+      }
+
+      timer = watch();
+    } catch (e) {
+      log.error(e);
+      process.exit(1);
+    }
   }, argv.t);
 }
 

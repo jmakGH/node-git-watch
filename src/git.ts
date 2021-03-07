@@ -1,12 +1,6 @@
 import { exec } from 'child_process'
 import log from './log';
 
-/**
- * Default time is 10 minutes (1000ms * 60s * 10min)
- */
-
-const DEFAULT_INTERVAL_MS = 600000;
-
 function execGit(command: string) {
   return new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
@@ -14,29 +8,31 @@ function execGit(command: string) {
         log.error(error || stderr);
         return reject(error || stderr);
       }
-      
-      log.success(stdout);
-      resolve(stdout);
+
+      return resolve(stdout);
     });
   });
 }
 
-function addAll() {
+export function addAll() {
   return execGit('git add .');
 }
 
-function commit(message: string) {
+export function commit(message: string) {
   return execGit(`git commit -m "${message}"`);
 }
 
-export default function createWatcher() {
-  let  timer
+export function push() {
+  return execGit('git push');
+}
 
-  return {
-    watch(intervalMs = DEFAULT_INTERVAL_MS) {
-      timer = setInterval(() => {
+export async function hasNewOrChangedFiles() {
+  try {
+    const newFiles = await execGit('git ls-files --others --exclude-standard');
+    const changedFiles = await execGit('git diff-index --name-only --diff-filter=d HEAD');
 
-      }, intervalMs);
-    }
+    return !!newFiles || !!changedFiles;
+  } catch (e) {
+    throw e;
   }
 }

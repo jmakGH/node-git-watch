@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
+    "date-fns": "^2.19.0",
     "simple-git": "^2.36.1",
     "yargs": "^16.2.0"
   },
