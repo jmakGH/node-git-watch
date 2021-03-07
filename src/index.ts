@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { format } from 'date-fns';
 import * as yargs from 'yargs';
 import { addAll, commit, hasNewOrChangedFiles, push } from './git';
@@ -14,7 +16,7 @@ const { argv } = yargs.scriptName('node-git-watch').option('t', {
   default: DEFAULT_INTERVAL_MS,
   describe: 'Interval in milliseconds between commits',
   type: 'number',
-}).help();
+}).help('h').alias('h', 'help');
 
 log.info('Starting up node-git-watch');
 log.info(`Attempting commit every ${argv.t}ms`);
