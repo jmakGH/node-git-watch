@@ -18,6 +18,14 @@
       "pre-commit": "npm run prettier-format && npm run lint"
     }
   },
+  "homepage": "https://github.com/jmakGH/node-git-watch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmakGH/node-git-watch"
+  },
+  "engines": {
+    "node": ">=8.10"
+  },
   "dependencies": {
     "chalk": "^4.1.0",
     "date-fns": "^2.19.0",
