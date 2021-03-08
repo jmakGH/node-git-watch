@@ -12,7 +12,7 @@ From there, you can call `node-git-watch` from the repo you wish to watch, using
 
 ### `-t [number=60000]`
 
-The amount of time between intervals when the script will check for changes. It defaults to 10 minutes.
+The amount of time between intervals when the script will check for changes. If using this flag, the value you pass in should be in milliseconds. It defaults to 10 minutes.
 
 ### `-f [string="y-MM-dd HH:mm:ss"]`
 
