@@ -4,9 +4,19 @@ import log from './log';
 function execGit(command: string) {
   return new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
-      if (error || stderr) {
-        log.error(error || stderr);
-        return reject(error || stderr);
+      if (error) {
+        log.error(`Error: ${command}`);
+        log.error(error);
+        return reject(error);
+      }
+
+      /**
+       * Git writes status updates to stderr so we just log it instead of
+       * rejecting it.
+       */
+
+      if (stderr) {
+        log.warn(stderr);
       }
 
       return resolve(stdout);
