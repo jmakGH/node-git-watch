@@ -1,4 +1,4 @@
-import { exec } from 'child_process'
+import { exec } from 'child_process';
 import log from './log';
 
 function execGit(command: string) {
@@ -29,7 +29,9 @@ export function push() {
 export async function hasNewOrChangedFiles() {
   try {
     const newFiles = await execGit('git ls-files --others --exclude-standard');
-    const changedFiles = await execGit('git diff-index --name-only --diff-filter=d HEAD');
+    const changedFiles = await execGit(
+      'git diff-index --name-only --diff-filter=d HEAD',
+    );
 
     return !!newFiles || !!changedFiles;
   } catch (e) {

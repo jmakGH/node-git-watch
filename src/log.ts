@@ -6,4 +6,4 @@ export default {
   info: (...args: any[]) => console.log(chalk.blue(...args)),
   success: (...args: any[]) => console.log(chalk.green(...args)),
   warn: (...args: any[]) => console.log(chalk.yellow(...args)),
-}
+};
