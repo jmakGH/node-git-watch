@@ -1,5 +1,5 @@
 {
-  "name": "node-git-watch",
+  "name": "git-watch-node",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
