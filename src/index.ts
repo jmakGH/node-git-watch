@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import fs from 'fs';
 import * as yargs from 'yargs';
 import log from './log';
 import watch from './watch';
@@ -34,6 +34,11 @@ const { argv } = yargs
   .alias('h', 'help');
 
 log.info('Starting up node-git-watch');
-log.info(`Attempting commit every ${argv.t}ms`);
 
+if (!fs.existsSync('.git')) {
+  log.error(`Error: Git doesn't seem to be initialized here ${process.cwd()}`);
+  process.exit(1);
+}
+
+log.info(`Attempting commit every ${argv.t}ms`);
 watch(argv.t, argv.f);
